@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+
+{% block navbar %}
+{% include "component/navbar.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header">Daftar Member </div>
+        <div class="card-body">
+            {% render_table table %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block footer %}
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+{% include "component/footer.html" %}
+{% endblock %}

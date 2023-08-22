@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<script src="/static/js/pdf.js"></script>
+<link href="/static/css/viewer.css" rel="stylesheet">
+<script src="/static/js/viewer.js"></script>
+<style>
+    *{
+        scroll-behavior: smooth !important;
+        }
+.banner {
+    background-color: #E76500;
+    height: 1286px;
+    width: 100%;
+}
+.banner2 {
+    background-color: #FFFFFF;
+    height: 798px;
+    width: 100%;
+}
+.pdftoolbar,
+.pdftoolbar i {
+  font-size: 14px;
+}
+.pdftoolbar span {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  width: 4em !important;
+  font-size: 12px;
+}
+.pdftoolbar .btn-sm {
+  padding: 0.12rem 0.25rem;
+}
+.pdfjs-viewer {
+  height: 300px !important;
+}
+.pdftoolbar {
+  width: 100%;
+  height: auto;
+  background: #ddd;
+  z-index: 100;
+}
+</style>
+{% endblock %}
+{% block navbar %}
+{% include "component/navbar2.html" %}
+{% endblock %}
+{% block content %}
+<div class="banner" style="background: linear-gradient(90deg, #FF55AB -16.41%, rgba(255, 5, 0, 0.7) 52.4%, rgba(255, 113, 1, 0.7) 117.04%);box-shadow: 0px 10px 20px rgba(24, 22, 22, 0.15);">
+  <div class="row">
+    <div class="col">
+      <div class="row"  style="padding-top: 16px;">
+        <div class="col text-center">
+            <span class="text-light" style="
+                height: 68px;
+                left: 175px;
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 800;
+                font-size: 96px;
+                line-height: 116px;
+                color: #B3D1FF;
+                text-shadow: 0px 4px 11px rgba(0, 0, 0, 0.6);">Guide Book UI/UX
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row"  style="padding-top: 27px;margin-top:53px;box-sizing: border-box;
+      padding-bottom: 27px;              
+      background: url(.png), linear-gradient(124.97deg, rgba(255, 252, 252, 0.4) 1.63%, rgba(217, 217, 217, 0.05) 100%);
+      background-blend-mode: overlay, normal;
+      opacity: 1;
+      box-shadow: 0px 40px 80px rgba(87, 87, 87, 0.15), inset -10px -10px 15px rgba(0, 0, 0, 0.05), inset 10px 10px 15px rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;">
+      <div class="col">
+          <iframe id="pdf-js-viewer" style="width:100%;height:1000px;" src="/viewer?file=/static/GUIDEBOOK UIUX.pdf" title="webviewer" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+{% include "component/footer.html" %}
+{% endblock %}
+{% block script %}
+<script>
+</script>
+{% endblock %}

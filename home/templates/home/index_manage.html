@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load render_table from django_tables2 %}
+
+{% block navbar %}
+{% include "component/navbar.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header">Kelola Member <buttion id="tambah_member" class="btn btn-outline ml-2"><i class="icon text-light"><img style="height:18px;" src="/static/image/plus.svg"></i></button></div>
+        <div class="card-body">
+            {% render_table table %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block footer %}
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+{% include "component/footer.html" %}
+{% endblock %}
+{% block script %}
+
+<script>
+$(document).ready(function() {
+
+    function showModal(options) {
+        // Default settings
+        var defaults = {
+            modalID: "#modal",
+            modalContent: ".modal-content",
+            modalForm: ".modal-content form",
+            formURL: null,
+            method: 'POST',
+            drfURL: null,
+            onSuccess: null,
+            onError: null,
+            isDeleteForm: false,
+            errorClass: ".invalid",
+        };
+    
+        // Extend default settings with provided options
+        var settings = $.extend(defaults, options);
+        console.log(settings);
+        $(settings.modalID).find(settings.modalContent).load(settings.formURL, function () {
+            $(settings.modalID).modal("show");
+            $(settings.modalForm).attr("action", settings.formURL);
+            addEventHandlers(settings);
+        });
+        var addEventHandlers = function (settings) {
+            $(settings.modalForm).on("submit", function (event) {
+                if (event.originalEvent !== undefined && settings.isDeleteForm === false) {
+                    event.preventDefault();
+                    isFormValid(settings, null);
+                    return true;
+                }
+            });
+            // Modal close handler
+            $(settings.modalID).on("hidden.bs.modal", function (event) {
+                $(settings.modalForm).remove();
+            });
+        };
+        var isFormValid = function (settings, callback) {
+            $.ajax({
+                type: $(settings.modalForm).attr("method"),
+                method: settings.method,
+                headers: { "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value },
+                url: settings.drfURL,
+                data: new FormData($(settings.modalForm)[0]),
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $(settings.submitBtn).prop("disabled", true);
+                },
+                success: function (response) {
+                    if ($(response).find(settings.errorClass).length > 0) {
+                        // Form is not valid, update it with errors
+                        $(settings.modalID).find(settings.modalContent).html(response);
+                        $(settings.modalForm).attr("action", settings.formURL);
+                        // Reinstantiate handlers
+                        addEventHandlers(settings);
+                    } else {
+                        // Form is valid, submit it
+                        if (settings.onSuccess) settings.onSuccess(response);
+                        //callback(settings);
+                    }
+                }
+            });
+        }
+      };
+      function deleteData(options) {
+        var defaults = {
+            element_id: "#form",
+            form_id: "#form",
+            id: null,
+            drfURL: null,
+            onSuccess: null,
+            onError: null,
+            errorClass: ".invalid",
+        };
+        var settings = $.extend(defaults, options);
+        Swal.fire({
+            icon: 'warning',
+            title: 'Hapus data',
+            text: "Ingin menghapus data ini ?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    method: 'DELETE',
+                    url: settings.drfURL+settings.id+'/',
+                    contentType : 'application/json',
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    dataType : 'json',
+                    success: function (data) {
+                        settings.onSuccess(data);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            } else if (result.isDenied) {
+            }
+        })
+      };
+      $("#tambah_member").click(function() {
+        showModal({
+            formURL: "/user/modal_member/",
+            drfURL: "/user/api/v1/member/",
+            onSuccess: function(response) {
+                $("#modal").modal('hide');
+                location.reload();
+            }
+        })    
+    });
+    $(".table").on("click",".member_delete",function() {
+        deleteData({id: this.id, 
+            drfURL: '/user/api/v1/member/',
+            onSuccess: function(data) {
+                swal.fire({
+                    title: "Data Terhapus !",
+                    text: "",
+                    icon: "success"
+                }).then(function() {
+                    location.reload();
+                });
+            }
+        });
+    });
+});
+
+    </script>
+    {% endblock %}

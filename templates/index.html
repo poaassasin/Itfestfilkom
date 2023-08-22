@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% block extrahead %}
+<script src="/static/js/pdf.js"></script>
+<link href="/static/css/viewer.css" rel="stylesheet">
+<script src="/static/js/viewer.js"></script>
+<style>
+    *{
+        scroll-behavior: smooth !important;
+        }
+.banner {
+    background-color: #FFFFFF !important;
+    min-height: 814px !important;
+    max-width: 100% !important;
+}
+.carousel > .carousel-inner > .carousel-item > .card > img{
+  width:auto;
+  max-height:100px;
+  max-width:100%;
+  object-fit: contain;
+}
+.carousel .carousel-indicators li {  
+  background-color: black; 
+}
+.carousel .carousel-indicators li.active { 
+  background-color: var(--primary); 
+}
+
+.carousel > .carousel-inner > .carousel-item > .card >{
+  max-width:100%;
+  object-fit: contain;
+}
+.carousel {
+  overflow:hidden;
+}
+
+.carousel > .carousel-inner {
+  max-width: 390px !important;
+  height:auto;
+}
+
+.carousel > .carousel-inner2 {
+  max-width: 800px !important;
+  height:auto;
+  overflow:hidden;
+}
+
+.carousel > .carousel-inner2 > carousel-item{
+  width: 600px !important;
+  height: auto !important;
+  overflow:hidden;
+}
+.carousel > .carousel-inner2 > .carousel-item > .card >{
+  max-width:100%;
+  object-fit: contain;
+}
+.card2 > img{
+  width:auto;
+  max-height:100px;
+  max-width:100%;
+  object-fit: contain;
+}
+
+.carousel > .carousel-inner > .carousel-item {
+  width:auto;
+  height:auto;
+}
+.carousel > .carousel-inner > .carousel-item active{
+  width:auto;
+  height:auto;
+}
+
+.carousel-inner2 > .carousel-item-next > .carousel-item-left {
+  display: none;
+  overflow:hidden;
+}
+.carousel-inner2 > .carousel-item-prev > .carousel-item-left {
+  display: none;
+  overflow:hidden;
+}
+
+.banner2 {
+    background-color: #FFFFFF !important;
+    height: 885px !important;
+    max-width: 100% !important;
+}
+
+.banner3 {
+    background-color: #FFFFFF !important;
+    height: 885px !important;
+    max-width: 100% !important;
+    
+}
+
+.banner4 {
+    background-color: #FFFFFF;
+    height: 800px !important;
+    max-width: 100% !important;
+}
+
+.banner5 {
+  background-color: #FFFFFF !important;
+  height: 600px !important;
+  max-width: 100% !important;
+}
+
+.artikel {
+  background-color: #FFFFFF !important;
+  height: 800px !important;
+  max-width: 100% !important;
+}
+
+.jadwal {
+    background-color: #FFFFFF !important;
+    height: 600px !important;
+    width: 100% !important;
+}
+.nopadding {
+  padding: 0!important;
+  margin: 0!important;
+}
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
+
+</style>
+{% endblock %}
+{% block navbar %}
+{% include "component/navbar.html" %}
+{% endblock %}
+{% block content %}
+{% include "component/banner1.html" %}
+{% include "component/banner2.html" %}
+{% include "component/banner3.html" %}
+{% include "component/banner5.html" %}
+{% include "component/jadwal.html" %}
+{% include "component/artikel.html" %}
+{% endblock %}
+{% block footer %}
+{% include "component/footer.html" %}
+{% endblock %}
+{% block modal %}
+<div class="modal fade" id="pdfview" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl " role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Guide Book Lomba</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <iframe id="pdf-js-viewer" style="width:100%;height:1000px;" src="/viewer?file=/static/FullGuidebook.pdf" title="webviewer" frameborder="0"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+{% endblock %}

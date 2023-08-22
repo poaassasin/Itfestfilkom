@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block navbar %}
+{% include "component/navbar.html" %}
+{% endblock %}
+
+{% block content %}
+{% for object in object_list %}
+  <div class="m-2">
+    {{object}}
+  </div>
+{% endfor %}
+{% endblock %}
+{% block footer %}
+{% include "component/footer.html" %}
+{% endblock %}

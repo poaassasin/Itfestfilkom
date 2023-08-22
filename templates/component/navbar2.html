@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light justify-content-between" style="height:124px;background-color: #FFFFFF;">
+    <span class="navbar-brand mb-0 h1"><a href="/"><img src="/static/image/logo.png" style="width: 101px;height: 101px;margin-left: 43px;top: 9px;" alt="Gambar" class="bulat"></a></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    <div class="collapse navbar-collapse bg-light" id="navbarSupportedContent" style="z-index:3000;">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link pl-1" href="/" style="font-weight: 600;font-size: 20px;line-height: 24px;text-align: center;">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link pl-1" href="#footer" style="font-weight: 600;font-size: 20px;line-height: 24px;text-align: center;">Kontak Kami</a>
+          </li>
+        </ul>
+        {% if user.is_authenticated %}
+          <div class="btn-group" style="display: flex; align-items: center;">
+            <i class="fa-solid fa-bell" style="color: black;" aria-hidden="true"></i>
+            <img src="https://static.vecteezy.com/system/resources/previews/005/005/788/original/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg" style="width: 30px; height:30px; margin-left: 15px;" alt="Gambar" class="rounded-circle dropdown-toggle">
+            <div style="margin-left: 5px; margin-right: 30px;">
+                <p style="margin: 0px; font-size: 12px; font-weight: bold; color: black;">{{ user.get_username }}</p>
+            </div>
+            <div class="px-1">
+                <i class="bi bi-chevron-down" style="color: black;" aria-hidden="true" data-toggle="dropdown"></i>
+                <div class="dropdown-menu dropdown-menu-right">
+                  {% if user.is_superuser %}
+                    <a class="dropdown-item" href="/user/user/">Kelola Pendaftar</a>
+                    <a class="dropdown-item" href="/user/dokumen/">Lihat Dokumen Pendaftar</a>
+                  {% else %}
+                    <a class="dropdown-item" href="/user/manage/">Kelola Tim</a>
+                    <a class="dropdown-item" href="/user/data_upload/">Data Upload Dokumen</a>
+                    <div class="dropdown-divider"></div>
+                  {% endif %}  
+                    <a class="dropdown-item" href="/user/logout/">Logout</a>
+                </div>
+              </div>
+              </div>
+        {% else %}
+          <form class="form-inline my-2 my-lg-0">
+              <a href="/user/login" class="btn btn-outline-success my-2  mx-sm-2  my-sm-0" style="font-weight: 600;font-size: 20px;line-height: 24px;text-align: center;border: 1px solid #000000;
+              border-radius: 13px;color: #000000;" type="button">Log in</a>
+              <a href="/user/register" class="btn btn-success my-2 text-light mx-sm-2 my-sm-0" style="font-weight: 600;font-size: 20px;line-height: 24px;text-align: center;background: #FF0400;
+              border-radius: 13px;" type="button">Daftar Gratis</a>
+          </form>
+          {% endif %}
+        </div>
+</nav>
